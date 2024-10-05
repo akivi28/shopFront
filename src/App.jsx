@@ -8,10 +8,20 @@ function App() {
   
   const apiUrl = import.meta.env.VITE_API_URL;
   console.log(apiUrl);
-  fetch(`${apiUrl}/test`)
-    .then(response => response.json())
-    .then(data => console.log(data));
-
+  fetch(`${apiUrl}/users`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Ошибка в ответе сервера');
+      }
+      // Преобразование тела ответа в JSON
+      return response.json();
+    })
+    .then(data => {
+      console.log('Полученные данные:', data);  // Здесь данные с сервера
+    })
+    .catch(error => {
+      console.error('Произошла ошибка:', error);
+    });
   return (
     <>
       <div>
